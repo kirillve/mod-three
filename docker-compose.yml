@@ -1,6 +1,8 @@
 services:
   composer-install:
-    image: php:8.3.2-cli-bookworm
+    build:
+      dockerfile: Dockerfile
+      context: .
     volumes:
       - ./:/app
     working_dir: /app
