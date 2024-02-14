@@ -4,14 +4,17 @@
 modThree test project with some unit tests
 quick unit tests run
 ```bash
+git clone https://github.com/kirillve/mod-three.git
+cd mod-three
 docker compose up
 ```
 
+## System Requirements
+- docker 20 and higher
+- docker-compose 2.x (in case of using docker without baked-in docker-compose plugin)
+
 ## How to use
 ### include into the project
-```bash
-composer require kirillve/mod-three
-```
 
 ### How to use FSM MOD3
 ```php
