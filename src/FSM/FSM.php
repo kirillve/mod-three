@@ -4,52 +4,47 @@ namespace FSM;
 
 class FSM
 {
+    public function __construct(private readonly OutputHandlerInterface $outputHandler)
+    {
+    }
+
     /**
-     * @param string[] $availableStates
-     * @param string[] $finalStates
-     * @param string[][] $transition
-     *
      * @throws UnsupportedStateException
      *
      * @return string
      */
     public function evaluate(
-        array $availableStates,
-        string $alphabet,
-        string $initialState,
-        array $finalStates,
-        array $transition
+        FiveTuplesRequestInterface $request
     ): string {
         // pre-flight check - we need to make sure that initial state supported
-        if (!in_array($initialState, $availableStates)) {
-            throw new UnsupportedStateException('Unsupported initial state: ' . $initialState);
+        if (!in_array($request->getInitialState(), $request->getAvailableStates())) {
+            throw new UnsupportedStateException('Unsupported initial state: ' . $request->getInitialState());
         }
 
         // step 1. set currentState from initialState
-        $currentState = $initialState;
+        $currentState = $request->getInitialState();
 
         // main loop - let's iterate alphabet
-        for ($i = 0; $i < strlen($alphabet); $i++) {
-            $resultingState = null;
+        for ($i = 0; $i < strlen($request->getAlphabet()); $i++) {
             // let's check transition mapping
-            if(!empty($transition[$currentState][$alphabet[$i]])) {
-                $resultingState = $transition[$currentState][$alphabet[$i]];
+            if (empty($request->getTransition()[$currentState]) || empty($request->getTransition()[$currentState][$request->getAlphabet()[$i]])) {
+                throw new UnsupportedStateException('Empty Transition State: current state - '.$currentState. ' alphabet key - '.$request->getAlphabet()[$i]);
             }
-            if ($resultingState == null) {
+            $currentState = $request->getTransition()[$currentState][$request->getAlphabet()[$i]];
+            if ($currentState == null) {
                 throw new UnsupportedStateException('Transition function returned empty value');
             }
-            if (!in_array($initialState, $availableStates)) {
-                throw new UnsupportedStateException('Unsupported resulting state: ' . $resultingState);
+            if (!in_array($currentState, $request->getAvailableStates())) {
+                throw new UnsupportedStateException('Unsupported resulting state: ' . $currentState);
             }
-            $currentState = $resultingState;
         }
 
         // need to verify our final state expected and supported
-        if (!in_array($currentState, $finalStates)) {
-            throw new UnsupportedStateException('Unsupported final state: ' . $initialState);
+        if (!in_array($currentState, $request->getFinalStates())) {
+            throw new UnsupportedStateException('Unsupported final state: ' . $currentState);
         }
 
         // returning a new instance
-        return $currentState;
+        return $this->outputHandler->handleOutput($currentState);
     }
 }

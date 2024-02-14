@@ -3,6 +3,7 @@
 namespace Tests\ModThree\Evaluators;
 
 use FSM\FSM;
+use FSM\OutputHandlers\MOD3OutputHandler;
 use ModThree\Evaluators\FSMMOD3Evaluator;
 use ModThree\ModThreeException;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +15,7 @@ class FSMMOD3EvaluatorTest extends TestCase
     #[\Override]
     public function setUp(): void
     {
-        $this->evaluator = new FSMMOD3Evaluator(new FSM());
+        $this->evaluator = new FSMMOD3Evaluator(new FSM(new MOD3OutputHandler()));
     }
 
     public function testInvalidInputException(): void
@@ -49,12 +50,10 @@ class FSMMOD3EvaluatorTest extends TestCase
             1,
             $this->evaluator->evaluate('0111111111111111111111111111111111111111111111111111111111111111')
         );
-        // expected exception with overflowing max-int64 + 1
         $this->assertEquals(
             1,
             $this->evaluator->evaluate('10000000000000000000000000000000000000000000000000000000000000000')
         );
-        // expected exception with overflowing max-uint64
         $this->assertEquals(
             0,
             $this->evaluator->evaluate('1111111111111111111111111111111111111111111111111111111111111111')

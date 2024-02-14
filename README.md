@@ -18,9 +18,9 @@ echo \ModThree\Facade::modThree('0001');
 ```
 or
 ```php
-$modThree = new \ModThree\ModThree(new \ModThree\Evaluators\FSMMOD3Evaluator(new \FSM\FSM()))
-echo $modThree->evaluate('0001');
+echo (int)(new \FSM\FSM(new \FSM\OutputHandlers\MOD3OutputHandler()))->evaluate(new MOD3Automation($input));
 ```
+or
 
 ## quick unit tests run
 ```bash

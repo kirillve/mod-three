@@ -3,14 +3,13 @@
 namespace ModThree;
 
 use FSM\FSM;
-use ModThree\Evaluators\FSMMOD3Evaluator;
+use FSM\OutputHandlers\MOD3OutputHandler;
+use FSM\Requests\MOD3Automation;
 
 class Facade
 {
-    public static function modThree(string $input): int
+    public static function facade(string $input): int
     {
-        $modThree = new ModThree(new FSMMOD3Evaluator(new FSM()));
-
-        return $modThree->evaluate($input);
+        return (int)(new FSM(new MOD3OutputHandler()))->evaluate(new MOD3Automation($input));
     }
 }
