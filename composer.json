@@ -1,0 +1,33 @@
+{
+  "name": "kirillve/mod-three",
+  "description": "A Mod Three project",
+  "type": "library",
+  "require-dev": {
+    "php": "^8.1|^8.2|^8.3",
+    "phpunit/phpunit": "^10.0",
+    "rector/rector": "^1.0",
+    "friendsofphp/php-cs-fixer": "^3.49",
+    "phpstan/phpstan": "^1.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "FSM\\": "src/FSM",
+      "ModThree\\": "src/ModThree"
+    },
+    "files": [
+      "src/mod-three.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/Tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Kirill Vereshchagin",
+      "email": "kirill.vereschagin@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable"
+}
