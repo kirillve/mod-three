@@ -2,18 +2,13 @@
 
 namespace ModThree\Evaluators;
 
-use FSM\FSM;
-use FSM\Requests\MOD3Automation;
 use FSM\UnsupportedStateException;
+use ModThree\BinaryStringObject;
 use ModThree\EvaluatorInterface;
 use ModThree\ModThreeException;
 
 class FSMMOD3Evaluator implements EvaluatorInterface
 {
-    public function __construct(private readonly FSM $FSM)
-    {
-    }
-
     /**
      * @param string $input
      *
@@ -25,7 +20,7 @@ class FSMMOD3Evaluator implements EvaluatorInterface
     public function evaluate(string $input): int
     {
         try {
-            $result = $this->FSM->evaluate(new MOD3Automation($input));
+            $result = (new BinaryStringObject($input))->mod3();
         } catch (UnsupportedStateException $exception) {
             throw new ModThreeException('Failed to evaluate mod3 value due to following error: ' . $exception->getMessage());
         }

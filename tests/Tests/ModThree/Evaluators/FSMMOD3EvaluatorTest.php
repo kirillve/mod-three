@@ -2,8 +2,6 @@
 
 namespace Tests\ModThree\Evaluators;
 
-use FSM\FSM;
-use FSM\OutputHandlers\MOD3OutputHandler;
 use ModThree\Evaluators\FSMMOD3Evaluator;
 use ModThree\ModThreeException;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +13,7 @@ class FSMMOD3EvaluatorTest extends TestCase
     #[\Override]
     public function setUp(): void
     {
-        $this->evaluator = new FSMMOD3Evaluator(new FSM(new MOD3OutputHandler()));
+        $this->evaluator = new FSMMOD3Evaluator();
     }
 
     public function testInvalidInputException(): void

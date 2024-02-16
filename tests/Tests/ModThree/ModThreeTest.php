@@ -2,8 +2,6 @@
 
 namespace Tests\ModThree;
 
-use FSM\FSM;
-use FSM\OutputHandlers\MOD3OutputHandler;
 use ModThree\Evaluators\FSMMOD3Evaluator;
 use ModThree\ModThree;
 use Override;
@@ -16,7 +14,7 @@ class ModThreeTest extends TestCase
     #[Override]
     public function setUp(): void
     {
-        $this->modThree = new ModThree(new FSMMOD3Evaluator(new FSM(new MOD3OutputHandler())));
+        $this->modThree = new ModThree(new FSMMOD3Evaluator());
     }
 
     public function testBasicInput(): void

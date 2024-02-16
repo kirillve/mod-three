@@ -23,18 +23,12 @@ echo \modThree('0001');
 
 ### Using directly via FSM
 ```php
-echo (int)(new \FSM\FSM(new \FSM\OutputHandlers\MOD3OutputHandler()))->evaluate(new MOD3Automation($input));
+echo (new BinaryStringObject($input))->mod3();
 ```
 
 ### Using directly via ModThree
 
 ```php
-$modThree = new \ModThree\ModThree(
-    new \ModThree\Evaluators\FSMMOD3Evaluator(
-        new FSM\FSM(
-            new \FSM\OutputHandlers\MOD3OutputHandler()
-        )
-    )
-);
+$modThree = new ModThree(new FSMMOD3Evaluator());
 echo $modThree->evaluate('0001');
 ```
